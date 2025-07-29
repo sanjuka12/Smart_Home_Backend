@@ -9,8 +9,3 @@
 //   res.status(200).json({ message: "Hello from API" });
 // }
 
-
-const serverless = require('serverless-http');
-const app = require('../app');
-
-module.exports = serverless(app);
