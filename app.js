@@ -21,6 +21,10 @@ app.get('/', (req, res) => {
   res.send('Smart Home Backend is running 🚀');
 });
 
+app.get('/status', (req, res) => {
+  res.json({ status: 'OK' });
+});
+
 app.use(express.json());
 
 // ✅ Routes
