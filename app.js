@@ -6,6 +6,7 @@ const loginRoutes = require("./routes/loginRoutes");
 const userLogRoutes = require("./routes/userLogRoutes");
 const inverterRoutes = require('./routes/inverterRoutes');
 const liveDataRoutes = require('./routes/liveDataRoutes');
+const inverterListRoutes = require('./routes/inverterListRoutes');
 
 
 // ✅ Enable CORS for both local frontend & Vercel frontend
@@ -17,6 +18,7 @@ app.use(cors({
   credentials: true
 }));
 
+
 app.use(express.json());
 
 // ✅ Routes
@@ -24,6 +26,7 @@ app.use("/", loginRoutes);
 app.use("/", userLogRoutes);
 app.use("/", inverterRoutes);
 app.use('/', liveDataRoutes);
+app.use("/", inverterListRoutes);
 
 
 

@@ -1,25 +1,11 @@
-// const { createServer } = require('node:http');
 // const serverless = require('serverless-http');
-// const hostname = '127.0.0.1';
-// const port = 3000;
+// const app = require('../app'); // import the Express app
 
-// const server = createServer((req, res) => {
-//   res.statusCode = 200;
-//   res.setHeader('Content-Type', 'text/plain');
-//   res.end('Hello World');
-// });
-
-// server.listen(port, hostname, () => {
-//   console.log(`Server running at http://${hostname}:${port}/`);
-// });
-
-
-
-// /*vercel hosting
+// module.exports = serverless(app); // export for Vercel
 
 // // api/index.js
-// const app = require('../app');
-// const serverless = require('serverless-http');
 
-// module.exports = serverless(app);
-// */
+// export default function handler(req, res) {
+//   res.status(200).json({ message: "Hello from API" });
+// }
+
