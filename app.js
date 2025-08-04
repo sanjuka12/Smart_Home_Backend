@@ -9,6 +9,7 @@ const liveDataRoutes = require('./routes/liveDataRoutes');
 const inverterListRoutes = require('./routes/inverterListRoutes');
 
 
+
 // ✅ Enable CORS for both local frontend & Vercel frontend
 app.use(cors({
   origin: [

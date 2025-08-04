@@ -1,18 +1,21 @@
-// controllers/liveDataController.js
-const { updateLiveSolarData, getAllLiveData  } = require('../models/liveDataModel');
+const {
+  updateLiveSolarData,
+  getAllLiveData,
+  getLiveDataById,
+} = require('../models/liveDataModel');
 
-
+// POST /api/realtimesolardata
 const updateRealtimeData = async (req, res) => {
   try {
-    const { gridStatus, voltage, current, frequency } = req.body;
+    const { UnitId, gridStatus, voltage, current, frequency } = req.body;
 
-    if (!gridStatus || voltage === undefined || current === undefined || frequency === undefined) {
+    if (!UnitId || !gridStatus || voltage === undefined || current === undefined || frequency === undefined) {
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
     const solarpower = current * voltage;
 
-    await updateLiveSolarData({ gridStatus, voltage, current, frequency, solarpower });
+    await updateLiveSolarData({ UnitId, gridStatus, voltage, current, frequency, solarpower });
 
     res.status(200).json({ message: 'Live data updated' });
   } catch (error) {
@@ -21,7 +24,8 @@ const updateRealtimeData = async (req, res) => {
   }
 };
 
-async function fetchAllLiveData(req, res) {
+// GET /api/realtimesolardata
+const fetchAllLiveData = async (req, res) => {
   try {
     const data = await getAllLiveData();
     res.json(data);
@@ -29,6 +33,25 @@ async function fetchAllLiveData(req, res) {
     console.error('Error fetching live data:', error.message);
     res.status(500).json({ error: 'Failed to fetch live data' });
   }
-}
+};
 
-module.exports = { updateRealtimeData, fetchAllLiveData };
+// GET /api/realtimesolardata/:inverterId
+const fetchLiveDataById = async (req, res) => {
+  try {
+    const inverterId = req.params.inverterId;
+    const doc = await getLiveDataById(inverterId);
+    if (!doc.exists) {
+      return res.status(404).json({ error: 'Data not found' });
+    }
+    res.json({ id: doc.id, ...doc.data() });
+  } catch (error) {
+    console.error('Error fetching inverter data:', error.message);
+    res.status(500).json({ error: 'Failed to fetch data' });
+  }
+};
+
+module.exports = {
+  updateRealtimeData,
+  fetchAllLiveData,
+  fetchLiveDataById
+};

@@ -1,15 +1,16 @@
-// models/liveDataModel.js
 const db = require('../config/firebaseConfig');
 
+// ✅ DEFINE THIS FIRST
 const updateLiveSolarData = async (data) => {
-  const docRef = db.collection('realtimesolardata').doc('latest'); // fixed document
+  const docRef = db.collection('realtimesolardata').doc(data.UnitId); // use UnitId as document ID
   await docRef.set({
     timestamp: new Date(),
     ...data
   });
 };
 
-async function getAllLiveData() {
+// ✅ FETCH ALL LIVE DATA
+const getAllLiveData = async () => {
   try {
     const snapshot = await db.collection('realtimesolardata').get();
 
@@ -25,6 +26,18 @@ async function getAllLiveData() {
   } catch (error) {
     throw error;
   }
-}
+};
 
-module.exports = { updateLiveSolarData, getAllLiveData };
+// ✅ FETCH LIVE DATA BY ID
+const getLiveDataById = async (inverterId) => {
+  const docRef = db.collection('realtimesolardata').doc(inverterId);
+  const doc = await docRef.get();
+  return doc;
+};
+
+// ✅ EXPORT ALL FUNCTIONS
+module.exports = {
+  updateLiveSolarData,
+  getAllLiveData,
+  getLiveDataById
+};
