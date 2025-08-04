@@ -22,8 +22,6 @@ async function addInverter(req, res) {
   }
 }
 
-
-
 const fetchInverters = async (req, res) => {
   try {
     const data = await getAllInverters();
