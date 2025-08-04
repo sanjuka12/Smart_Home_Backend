@@ -22,7 +22,7 @@
 
 
 const admin = require("firebase-admin");
-require("dotenv").config();
+require(".env").config();
 
 // 🧠 Decode the base64 and parse the JSON
 const serviceAccount = JSON.parse(
