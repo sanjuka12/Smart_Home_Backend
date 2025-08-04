@@ -3,15 +3,15 @@ const { addInverterData, getAllInverterData  } = require('../models/inverterMode
 
 const saveInverterData = async (req, res) => {
   try {
-    const { gridStatus, voltage, current, frequency } = req.body;
+    const { UnitId, gridStatus, voltage, current, frequency } = req.body;
 
-    if (!gridStatus || voltage === undefined || current === undefined || frequency === undefined) {
+    if (!gridStatus || voltage === undefined || current === undefined || frequency === undefined || UnitId === undefined) {
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
    const solarpower = current * voltage;
 
-    const id = await addInverterData({ gridStatus, voltage, current, frequency, solarpower });
+    const id = await addInverterData({ UnitId, gridStatus, voltage, current, frequency, solarpower });
 
     res.status(200).json({ message: 'Data saved', id });
   } catch (error) {
