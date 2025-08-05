@@ -16,6 +16,7 @@
     "firebase": "^11.8.1",
     "firebase-admin": "^13.4.0",
     "mongoose": "^8.15.1",
-    "serverless-http": "^3.2.0"
+    "serverless-http": "^3.2.0",
+    "ws": "^8.18.3"
   }
 }

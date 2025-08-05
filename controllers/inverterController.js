@@ -1,4 +1,4 @@
-const { addInverterData, getAllInverterData  } = require('../models/inverterModel');
+const { addInverterData, getAllInverterData } = require('../models/inverterModel');
 
 
 const saveInverterData = async (req, res) => {
@@ -30,4 +30,17 @@ const fetchInverterData = async (req, res) => {
   }
 };
 
-module.exports = { saveInverterData, fetchInverterData };
+
+const deleteAllInverterData = async (req, res) => {
+  try {
+    const result = await deleteAllInverterData();
+    res.status(200).json({ message: 'All inverter data deleted', ...result });
+  } catch (error) {
+    console.error("Error deleting inverter data:", error);
+    res.status(500).json({ error: 'Failed to delete inverter data' });
+  }
+};
+
+module.exports = { saveInverterData, fetchInverterData, deleteAllInverterData };
+
+

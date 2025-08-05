@@ -7,6 +7,8 @@ const userLogRoutes = require("./routes/userLogRoutes");
 const inverterRoutes = require('./routes/inverterRoutes');
 const liveDataRoutes = require('./routes/liveDataRoutes');
 const inverterListRoutes = require('./routes/inverterListRoutes');
+const batteryroutes = require('./routes/batteryroutes');
+const batteryliveroutes = require('./routes/batteryliveroutes');
 
 
 
@@ -28,6 +30,8 @@ app.use("/", userLogRoutes);
 app.use("/", inverterRoutes);
 app.use('/', liveDataRoutes);
 app.use("/", inverterListRoutes);
+app.use("/", batteryroutes);
+app.use("/", batteryliveroutes);
 
 
 

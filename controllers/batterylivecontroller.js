@@ -1,21 +1,20 @@
 const {
-  updateLiveSolarData,
+  updateLiveBatteryData,
   getAllLiveData,
   getLiveDataById,
-} = require('../models/liveDataModel');
+} = require('../models/batterylivemodel');
 
 // POST /api/realtimesolardata
 const updateRealtimeData = async (req, res) => {
   try {
-    const { UnitId, gridStatus, voltage, current, frequency } = req.body;
+    const { UnitId, gridStatus, voltage, current, power, soc } = req.body;
 
-    if (!UnitId || !gridStatus || voltage === undefined || current === undefined || frequency === undefined) {
+    if (!UnitId || !gridStatus || voltage === undefined || current === undefined || power=== undefined || soc=== undefined) {
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
-    const solarpower = current * voltage;
 
-    await updateLiveSolarData({ UnitId, gridStatus, voltage, current, frequency, solarpower });
+    await updateLiveBatteryData({ UnitId, gridStatus, voltage, current, power, soc });
 
     res.status(200).json({ message: 'Live data updated' });
   } catch (error) {
