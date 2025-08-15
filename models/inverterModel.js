@@ -38,5 +38,4 @@ const deleteAllInverterData = async () => {
 };
 
 
-
 module.exports = { addInverterData, getAllInverterData, deleteAllInverterData };

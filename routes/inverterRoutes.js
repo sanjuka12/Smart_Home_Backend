@@ -7,4 +7,6 @@ router.post('/solarinverterdata', saveInverterData);
 router.get('/solarinverterdata', fetchInverterData);
 router.delete('/solarinverterdata', deleteAllInverterData);
 
+
+
 module.exports = router;

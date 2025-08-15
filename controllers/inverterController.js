@@ -1,5 +1,4 @@
-const { addInverterData, getAllInverterData } = require('../models/inverterModel');
-
+const { addInverterData, getAllInverterData} = require('../models/inverterModel');
 
 const saveInverterData = async (req, res) => {
   try {
@@ -41,6 +40,4 @@ const deleteAllInverterData = async (req, res) => {
   }
 };
 
-module.exports = { saveInverterData, fetchInverterData, deleteAllInverterData };
-
-
+module.exports = { saveInverterData, fetchInverterData, deleteAllInverterData};
