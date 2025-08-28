@@ -11,6 +11,16 @@ const findUserByUsername = async (username) => {
   return { id: doc.id, ...doc.data() };
 };
 
+const addUser = async (userData) => {
+  const docRef = await db.collection('Login').add({
+    ...userData,
+    createdAt: new Date()
+  });
+  return docRef.id;
+};
+
+
 module.exports = {
   findUserByUsername,
+  addUser
 };

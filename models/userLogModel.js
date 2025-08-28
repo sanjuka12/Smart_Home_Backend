@@ -4,7 +4,7 @@ const db = admin.firestore();
 
 const userLogCollection = db.collection('userlog');
 
-const addUserLog = async ({ userName, role }) => {
+const addUserLog = async ({ userName, role, inverterAccess }) => {
   const now = new Date();
 
   const formattedDate = now.toLocaleDateString('en-GB'); // e.g., "29/05/2025"
@@ -23,9 +23,7 @@ const addUserLog = async ({ userName, role }) => {
   return { id: docRef.id, ...data };
 };
 
-module.exports = {
-  addUserLog,
-};
+
 
 exports.formatUserLog = function(snapshot) {
   const data = snapshot.val();
@@ -35,4 +33,21 @@ exports.formatUserLog = function(snapshot) {
     id,
     ...value,
   }));
+};
+
+const deleteAllUserLogsFromDB = async () => {
+  const snapshot = await userLogCollection.get();
+  const batch = db.batch();
+
+  snapshot.forEach(doc => {
+    batch.delete(doc.ref);
+  });
+
+  await batch.commit();
+  return { deleted: snapshot.size };
+};
+
+module.exports = {
+  addUserLog,
+  deleteAllUserLogsFromDB
 };

@@ -25,6 +25,17 @@ const getAllInverterData = async () => {
   return data;
 };
 
+const deleteAllInverterDataFromDB = async () => {
+  const snapshot = await db.collection("BatteryData").get();
+  const batch = db.batch();
+
+  snapshot.forEach(doc => {
+    batch.delete(doc.ref);
+  });
+
+  await batch.commit();
+  return { deleted: snapshot.size };
+};
 
 
-module.exports = { addInverterData, getAllInverterData };
+module.exports = { addInverterData, getAllInverterData, deleteAllInverterDataFromDB };

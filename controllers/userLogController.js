@@ -1,13 +1,13 @@
 // controllers/userLogController.js
 const admin = require("firebase-admin");
 const db = admin.firestore();
-const { formatUserLog } = require("../models/userLogModel");
+const { formatUserLog, deleteAllUserLogsFromDB} = require("../models/userLogModel");
 
 exports.addUserLog = async (req, res) => {
   try {
-    const { userName, role } = req.body;
+    const { userName, role, inverterAccess } = req.body;
 
-    if (!userName || !role) {
+    if (!userName || !role || !inverterAccess) {
       return res.status(400).json({ message: "userName and role are required" });
     }
 
@@ -21,7 +21,8 @@ exports.addUserLog = async (req, res) => {
       role,
       date: formattedDate,
       login: loginTime,
-      logout:logout
+      logout:logout,
+      inverterAccess
     };
 
     await db.collection("userlog").add(logData);
@@ -69,5 +70,15 @@ exports.getUserLogs = async (req, res) => {
     res.status(200).json(logs);
   } catch (error) {
     res.status(500).json({ message: "Error fetching logs", error });
+  }
+};
+
+exports.deleteAllUserLogs = async (req, res) => {
+  try {
+    const result = await deleteAllUserLogsFromDB();
+    res.status(200).json({ message: "All user logs deleted", ...result });
+  } catch (error) {
+    console.error("Error deleting user logs:", error);
+    res.status(500).json({ message: "Failed to delete user logs" });
   }
 };

@@ -4,7 +4,7 @@ const saveInverterData = async (req, res) => {
   try {
     const { UnitId, gridStatus, voltage, current, frequency } = req.body;
 
-    if (!gridStatus || voltage === undefined || current === undefined || frequency === undefined || UnitId === undefined) {
+    if (gridStatus=== undefined || voltage === undefined || current === undefined || frequency === undefined || UnitId === undefined) {
       return res.status(400).json({ error: 'Missing required fields' });
     }
 

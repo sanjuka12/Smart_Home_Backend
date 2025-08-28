@@ -1,32 +1,36 @@
+// server.js
 const http = require("http");
 const app = require("./app");
-const WebSocket = require("ws");
-
 const PORT = process.env.PORT || 3000;
 
 // Create HTTP server
 const server = http.createServer(app);
 
-// Create WebSocket server
-const wss = new WebSocket.Server({ server });
+// Setup Socket.IO
+const io = require("socket.io")(server, {
+  cors: {
+    origin: ["http://localhost:3001", "https://smart-home-frontend-three.vercel.app"],
+    credentials: true,
+  },
+});
 
-// Store all connected clients
-const wssClients = new Set();
+// Attach io to app so routes/controllers can access it
+app.set("io", io);
 
-wss.on("connection", (ws) => {
-  console.log("🟢 WebSocket client connected");
-  wssClients.add(ws);
+io.on("connection", (socket) => {
+  console.log("🟢 Frontend connected:", socket.id);
 
-  ws.on("close", () => {
-    console.log("🔴 WebSocket client disconnected");
-    wssClients.delete(ws);
+  socket.on("subscribe", (UnitId) => {
+    console.log(`Socket ${socket.id} subscribed to inverter ${UnitId}`);
+    socket.join(UnitId);
+  });
+
+  socket.on("disconnect", () => {
+    console.log("🔴 Frontend disconnected:", socket.id);
   });
 });
 
-// Attach to Express app so controllers can use it
-app.set("wssClients", wssClients);
-
-// Start the combined server
+// Start server
 server.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
 });

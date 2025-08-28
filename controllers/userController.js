@@ -1,5 +1,6 @@
 const UserModel = require('../models/userModel');
 
+
 // ✅ Get single user by userName (passed from frontend)
 const getUser = async (req, res) => {
   try {
@@ -23,5 +24,5 @@ const getUser = async (req, res) => {
 };
 
 module.exports = {
-  getUser
+  getUser,
 };
