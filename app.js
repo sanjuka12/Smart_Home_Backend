@@ -29,8 +29,8 @@ let history = [];
 
 // ESP32 sends solar data
 app.post("/realtimedata", (req, res) => {
-  const { UnitId, gridStatus, voltage, current, frequency, power } = req.body;
-  const data = { UnitId, type: "solar", gridStatus, voltage, current, frequency, power, timestamp: new Date() };
+  const { UnitId, type, gridStatus, voltage, current, frequency, power } = req.body;
+  const data = { UnitId, type, gridStatus, voltage, current, frequency, power, timestamp: new Date() };
 
   history.push(data);
 
@@ -43,8 +43,8 @@ app.post("/realtimedata", (req, res) => {
 
 // ESP32 sends battery data
 app.post("/realtimebatterydata", (req, res) => {
-  const { UnitId, gridStatus, voltage, current, power, soc } = req.body;
-  const data = { UnitId, type: "battery", gridStatus, voltage, current, power, soc, timestamp: new Date() };
+  const { UnitId, type, gridStatus, voltage, current, power, soc } = req.body;
+  const data = { UnitId, type , gridStatus, voltage, current, power, soc, timestamp: new Date() };
 
   const io = req.app.get("io");
   io.to(UnitId).emit("newData", data);
