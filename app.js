@@ -13,7 +13,7 @@ const inverterListRoutes = require('./routes/inverterListRoutes');
 app.use(cors({
   origin: [
     "http://localhost:3001", // local React frontend
-    "https://smart-home-frontend-three.vercel.app" // deployed Vercel frontend
+    "https://7hh9sm4x-3001.asse.devtunnels.ms/" // deployed Vercel frontend
   ],
   credentials: true
 }));
