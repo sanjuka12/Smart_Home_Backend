@@ -6,13 +6,6 @@ const PORT = process.env.PORT || 3000;
 // Create HTTP server
 const server = http.createServer(app);
 
-// Setup Socket.IO
-const io = require("socket.io")(server, {
-  cors: {
-    origin: ["http://localhost:3001", "https://smart-home-frontend-three.vercel.app"],
-    credentials: true,
-  },
-});
 
 // Attach io to app so routes/controllers can access it
 app.set("io", io);
