@@ -1,8 +1,8 @@
 const db = require('../config/firebaseConfig');
 
 // ✅ DEFINE THIS FIRST
-const updateLiveSolarData = async (data) => {
-  const docRef = db.collection('realtimesolardata').doc(data.UnitId); // use UnitId as document ID
+const updateLiveBatteryData = async (data) => {
+  const docRef = db.collection('batterylivedata').doc(data.UnitId); // use UnitId as document ID
   await docRef.set({
     timestamp: new Date(),
     ...data
@@ -12,7 +12,7 @@ const updateLiveSolarData = async (data) => {
 // ✅ FETCH ALL LIVE DATA
 const getAllLiveData = async () => {
   try {
-    const snapshot = await db.collection('realtimesolardata').get();
+    const snapshot = await db.collection('batterylivedata').get();
 
     const data = [];
     snapshot.forEach(doc => {
@@ -30,14 +30,14 @@ const getAllLiveData = async () => {
 
 // ✅ FETCH LIVE DATA BY ID
 const getLiveDataById = async (inverterId) => {
-  const docRef = db.collection('realtimesolardata').doc(inverterId);
+  const docRef = db.collection('batterylivedata').doc(inverterId);
   const doc = await docRef.get();
   return doc;
 };
 
 // ✅ EXPORT ALL FUNCTIONS
 module.exports = {
-  updateLiveSolarData,
+  updateLiveBatteryData,
   getAllLiveData,
   getLiveDataById
 };

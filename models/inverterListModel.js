@@ -17,9 +17,6 @@ async function createInverter(data) {
   return docRef.id;
 }
 
-module.exports = {
-  createInverter,
-};
 
 const getAllInverters = async () => {
   const snapshot = await db.collection('InverterList').get();
@@ -28,5 +25,6 @@ const getAllInverters = async () => {
 };
 
 module.exports = {
-  getAllInverters
+  getAllInverters,
+  createInverter
 };

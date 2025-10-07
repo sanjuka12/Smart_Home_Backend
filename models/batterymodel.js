@@ -1,7 +1,7 @@
 const db = require('../config/firebaseConfig');
 
 const addInverterData = async (data) => {
-  const docRef = await db.collection('InverterData').add({
+  const docRef = await db.collection('BatteryData').add({
     timestamp: new Date(),
     ...data
   });
@@ -9,7 +9,7 @@ const addInverterData = async (data) => {
 };
 
 const getAllInverterData = async () => {
-  const snapshot = await db.collection('InverterData')
+  const snapshot = await db.collection('BatteryData')
                            .orderBy('timestamp', 'asc')
                            .get();
 
@@ -26,7 +26,7 @@ const getAllInverterData = async () => {
 };
 
 const deleteAllInverterDataFromDB = async () => {
-  const snapshot = await db.collection("InverterData").get();
+  const snapshot = await db.collection("BatteryData").get();
   const batch = db.batch();
 
   snapshot.forEach(doc => {
@@ -38,4 +38,4 @@ const deleteAllInverterDataFromDB = async () => {
 };
 
 
-module.exports = { addInverterData, getAllInverterData, deleteAllInverterDataFromDB};
+module.exports = { addInverterData, getAllInverterData, deleteAllInverterDataFromDB };

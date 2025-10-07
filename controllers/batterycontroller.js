@@ -1,16 +1,16 @@
-const { addInverterData, getAllInverterData, deleteAllInverterDataFromDB} = require('../models/inverterModel');
+const { addInverterData, getAllInverterData, deleteAllInverterDataFromDB } = require('../models/batterymodel');
 
 const saveInverterData = async (req, res) => {
   try {
-    const { UnitId, gridStatus, voltage, current, frequency } = req.body;
+    const { UnitId, gridStatus, voltage, current, power, soc } = req.body;
 
-    if (gridStatus=== undefined || voltage === undefined || current === undefined || frequency === undefined || UnitId === undefined) {
+    if (gridStatus ===undefined || voltage === undefined || current === undefined || power === undefined || UnitId === undefined || UnitId === undefined) {
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
-   const solarpower = current * voltage;
+    const solarpower = current * voltage;
 
-    const id = await addInverterData({ UnitId, gridStatus, voltage, current, frequency, solarpower });
+    const id = await addInverterData({ UnitId, gridStatus, voltage, current, power, soc });
 
     res.status(200).json({ message: 'Data saved', id });
   } catch (error) {
@@ -29,7 +29,6 @@ const fetchInverterData = async (req, res) => {
   }
 };
 
-
 const deleteAllInverterData = async (req, res) => {
   try {
     const result = await deleteAllInverterDataFromDB(); // ✅ calls model, not itself
@@ -40,4 +39,9 @@ const deleteAllInverterData = async (req, res) => {
   }
 };
 
-module.exports = { saveInverterData, fetchInverterData, deleteAllInverterData};
+
+module.exports = {
+  saveInverterData,
+  fetchInverterData,
+  deleteAllInverterData
+};

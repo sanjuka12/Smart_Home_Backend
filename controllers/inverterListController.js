@@ -22,8 +22,6 @@ async function addInverter(req, res) {
   }
 }
 
-
-
 const fetchInverters = async (req, res) => {
   try {
     const data = await getAllInverters();
@@ -34,7 +32,26 @@ const fetchInverters = async (req, res) => {
   }
 };
 
+async function retrieveInverterSummary(req, res) {
+  try {
+    const entries = await getAllInverters();
+
+    const totalItems = entries.length;
+    const overallCapacity = entries.reduce((acc, item) => acc + Number(item.InstalledCapacity || 0), 0);
+
+    res.status(200).json({
+      totalItems,
+      overallCapacity,
+      records: entries
+    });
+  } catch (err) {
+    console.error("Retrieval failed:", err);
+    res.status(500).json({ error: "Unable to fetch inverter records" });
+  }
+}
+
 module.exports = {
   addInverter,
-  fetchInverters
+  fetchInverters,
+  retrieveInverterSummary
 };
